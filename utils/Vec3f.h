@@ -4,6 +4,8 @@
 #include <cmath>
 #include <ostream>
 
+#include "Common.h"
+
 class Vec3f
 {
 public:
@@ -104,6 +106,15 @@ inline Vec3f Cross(const Vec3f &v0, const Vec3f &v1)
 inline Vec3f Lerp(const Vec3f &v0, const Vec3f &v1, float t)
 {
     return (1-t) * v0 + t * v1;
+}
+
+inline Vec3f RandVec3()
+{
+    return Vec3f(
+        Random(),
+        Random(),
+        Random()
+    );
 }
 
 using RGB = Vec3f;
