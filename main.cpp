@@ -13,21 +13,35 @@ RGB HitColor(const Ray &ray, Hittable &world, const double max_depth);
 int main(void)
 {
     const double aspect_ratio = 16.0 / 9.0;
-    const int image_width = 700;
+    const int image_width = 1920;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 100;
+    const int samples_per_pixel = 250;
     const int samples_per_strata = samples_per_pixel / 4;
+    double max_depth = 50;
     
-    Camera camera;
-
+    const Point3 camera_position(-1,1.5,0);
+    const Point3 center_of_attention(0,0,-1);
+    const Vec3 world_up(0,1,0);
+    const double vertical_fov = 90.0;
+    const double aperture = 0.25;
+    const double depth_of_field = (center_of_attention - camera_position).Length();
+    Camera camera(
+        camera_position, 
+        center_of_attention, 
+        world_up, vertical_fov, 
+        aspect_ratio,
+        aperture,
+        depth_of_field
+        );
     Image test_img(image_width, image_height, 255);
-    const char *filename = "./out.ppm";
+    const char *filename = "out.ppm";
     
     HittableList world;
-    auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.8, 0.0));
+    auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.1, 0.4));
+    auto material_diffuse = std::make_shared<Lambertian>(RGB(52, 201, 235)/255.0);
     auto material_center = std::make_shared<Dielectric>(1.5);
     //auto material_left   = std::make_shared<Dielectric>(1.5);
-    auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 0.5);
+    auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 0.1);
 
     // auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.8, 0.0));
     // auto material_center = std::make_shared<Lambertian>(RGB(0.7, 0.3, 0.3));
@@ -35,13 +49,14 @@ int main(void)
     // auto material_right  = std::make_shared<Metal>(RGB(0.8, 0.6, 0.2), 0);
 
     world.Add(std::make_shared<Sphere>(Point3( 0.0, -100.5, -1.0), 100.0, material_ground));
-    world.Add(std::make_shared<Sphere>(Point3( 0.0,    0.0, -1.0),   0.5, material_center));
+    world.Add(std::make_shared<Sphere>(Point3( 0.0,    0.0, -1.5),   0.5, material_center));
+    world.Add(std::make_shared<Sphere>(Point3( 0.0,    0.0, 0),   0.5, material_diffuse));
     //world.Add(std::make_shared<Sphere>(Point3(-1.0,    0.0, -1.0),   0.5, material_left));
     world.Add(std::make_shared<Sphere>(Point3(-1.0,    0.0, -1.0),  -0.4, material_center));
     world.Add(std::make_shared<Sphere>(Point3(-1.0,    0.0, -1.0),  0.5, material_center));
-    world.Add(std::make_shared<Sphere>(Point3( 1.0,    0.0, -1.0),   0.5, material_right));
+    world.Add(std::make_shared<Sphere>(Point3( 1.0,    0.0, -1.0),   0.6, material_right));
+
     bool with_strata = true;
-    double max_depth = 60;
     for(auto i = image_height - 1; i >= 0; i--)
     {
         std::cout << "row: " << image_height - i << " of " << image_height << std::endl;

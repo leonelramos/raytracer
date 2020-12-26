@@ -162,6 +162,16 @@ inline Vec3 Refract(const Vec3 &incident, const Vec3 &normal, double refraction_
     return refracted_projection + refracted_rejection;
 }
 
+inline Vec3 RandomInUnitDisk()
+{
+    while(true)
+    {
+        Vec3 candidate(RandomRange(-1, 1), RandomRange(-1, 1), 0);
+        if(candidate.Length2() > 1) continue;
+        return candidate;
+    }
+}
+
 using RGB = Vec3;
 using Point3 = Vec3;
 

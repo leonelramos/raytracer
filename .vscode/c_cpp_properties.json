@@ -3,11 +3,13 @@
         {
             "name": "Linux",
             "includePath": [
+                "${workspaceFolder}/core",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/utils",
                 "${workspaceFolder}/geometry",
                 "${workspaceFolder}/math",
                 "${workspaceFolder}/materials",
+                "${workspaceFolder}/camera",
                 "${workspaceFolder}"
             ],
             "defines": [],
