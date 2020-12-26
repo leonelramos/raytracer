@@ -4,7 +4,11 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/utils"
+                "${workspaceFolder}/utils",
+                "${workspaceFolder}/geometry",
+                "${workspaceFolder}/math",
+                "${workspaceFolder}/materials",
+                "${workspaceFolder}"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

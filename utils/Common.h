@@ -5,23 +5,27 @@
 #include <limits>
 #include <memory>
 #include <cstdlib>
+#include <time.h>
 
-const float infinity = std::numeric_limits<float>::infinity();
-const float pi = 3.1415926535897932385f;
+const double infinity = std::numeric_limits<double>::infinity();
+const double pi = 3.1415926535897932385;
 
-inline float DegreesToRadians(float degrees) {
-    return degrees * pi / 180.0f;
+inline double DegreesToRadians(double degrees) {
+    return degrees * pi / 180.0;
 }
 
-inline float Clamp(float x, float min, float max) {
+inline double Clamp(double x, double min, double max) {
     if (x < min) return min;
     if (x > max) return max;
     return x;
 }
 
-inline float Random() { return (Clamp(rand() - 1, 0, RAND_MAX - 1))/(RAND_MAX); }
+inline double Random() 
+{
+    return (Clamp(rand() - 1, 0, RAND_MAX - 1))/(RAND_MAX); 
+}
 
-inline float RandomRange(const float &min, const float &max)
+inline double RandomRange(const double &min, const double &max)
 {
     return min + Random() * (max - min);
 }

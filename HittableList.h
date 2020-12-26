@@ -14,16 +14,16 @@ public:
 
     void Clear() { hittables.clear(); }
     void Add(std::shared_ptr<Hittable> hittable) { hittables.push_back(hittable); }
-    virtual bool Hit(const Ray &ray, const float &min_t, const float &max_t) override;
+    virtual bool Hit(const Ray &ray, const double &min_t, const double &max_t) override;
 
 private:
     std::vector<std::shared_ptr<Hittable>> hittables;
 };
 
-bool HittableList::Hit(const Ray &ray, const float &min_t, const float &max_t)
+bool HittableList::Hit(const Ray &ray, const double &min_t, const double &max_t)
 {
     bool hit_something = false;
-    float nearest_t = max_t;
+    double nearest_t = max_t;
     HitRecord nearest_hit;
 
     for(auto &hittable : hittables)

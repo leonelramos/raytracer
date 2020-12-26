@@ -1,17 +1,21 @@
 #ifndef HITTABLE_H
 #define HITTABLE_H
 
+#include "Common.h"
 #include "Ray.h"
+
+class Material;
 
 struct HitRecord 
 {
 public:
-    Point3f point;
-    float t;
-    Vec3f normal;
+    Point3 point;
+    double t;
+    Vec3 normal;
     bool front_face;
+    std::shared_ptr<Material> material;
 
-    inline void SetFaceNormal(const Ray &ray, const Vec3f &outward_normal)
+    inline void SetFaceNormal(const Ray &ray, const Vec3 &outward_normal)
     {
         front_face = Dot(ray.GetDirection(), outward_normal) < 0;
         if(!front_face) normal = -outward_normal;
@@ -24,6 +28,7 @@ public:
         t = hr.t;
         normal = hr.normal;
         front_face = hr.front_face;
+        material = hr.material;
         return *this;
     }
 };
@@ -31,7 +36,7 @@ public:
 class Hittable 
 {
 public:
-    virtual bool Hit(const Ray &ray, const float &min_t, const float &max_t) = 0;
+    virtual bool Hit(const Ray &ray, const double &min_t, const double &max_t) = 0;
     virtual HitRecord GetHit() const { return hit; };
 protected:
     HitRecord hit;

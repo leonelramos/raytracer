@@ -1,20 +1,20 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Vec3f.h"
+#include "Vec3.h"
 
 class Entity
 {
 public:
     Entity()
-        : position(Point3f(0)) {}
-    Entity(Point3f position) 
+        : position(Point3(0)) {}
+    Entity(Point3 position) 
         : position(position) {}
 
-    virtual Point3f Position() { return position; }
-    virtual void SetPosition(const Point3f &new_position) { position = new_position; }
+    virtual Point3 Position() { return position; }
+    virtual void SetPosition(const Point3 &new_position) { position = new_position; }
 private:
-    Point3f position;
+    Point3 position;
 };
 
 #endif

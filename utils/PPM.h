@@ -7,22 +7,17 @@
 class PPM
 {
 public:
-    PPM() : width(500), height(500), max_intensity(255), image_buffer(new int[500*500*3]) {}
-    PPM(int width, int height) : 
-        width(width), height(height), max_intensity(255), image_buffer(new int[width*height*3]) {}
-    PPM(int width, int height, int max_intensity) :
-        width(width), 
-        height(height), 
+    PPM() 
+        : width(500), height(500), max_intensity(255), 
+        image_buffer(new int[500*500*3]) {}
+
+    PPM(int width, int height, int max_intensity) 
+        : width(width), height(height), 
         max_intensity(max_intensity), 
         image_buffer(new int[width*height*3]) {}
-    PPM(int width, float aspect_ratio) : 
-        width(width), 
-        height(static_cast<int>(width/aspect_ratio)), 
-        max_intensity(255), 
-        image_buffer(new int[width*height*3]) {}
-    PPM(int width, float aspect_ratio, int max_intensity) :
-        width(width), 
-        height(static_cast<int>(width/aspect_ratio)), 
+        
+    PPM(int width, double aspect_ratio, int max_intensity) 
+        : width(width), height(static_cast<int>(width/aspect_ratio)), 
         max_intensity(max_intensity), 
         image_buffer(new int[width*height*3]) {}
 
