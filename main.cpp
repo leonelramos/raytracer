@@ -124,8 +124,6 @@ RGB HitColor(const Ray &ray, Hittable &world, const double max_depth)
                 texture_intensity = mat->GetTextureIntensity(hit.tex_coords.u, hit.tex_coords.v);
                 attenuation = Lerp(mat->GetAttenuation(), RGB(13, 152, 186)/255, texture_intensity);
             }
-            if(texture_intensity <= 0) std::cout << texture_intensity << std::endl;
-            
             return attenuation * HitColor(mat->GetScatteredRay(), world, max_depth - 1);
         } 
         return RGB(0);
