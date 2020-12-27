@@ -8,7 +8,7 @@
 class Sphere : public Hittable
 {
 public:
-    Sphere() 
+    Sphere()
         : center(Point3(0,0,0)), radius(1) {}
     Sphere(Point3 center) 
         : center(center), radius(1) {}
@@ -48,6 +48,9 @@ bool Sphere::Hit(const Ray &ray, const double &min_t, const double &max_t)
     Vec3 outward_normal = (hit.point - center)/radius;
     hit.SetFaceNormal(ray, outward_normal);
     hit.material = material;
+    double u = outward_normal.x / 2.0 + 0.5;
+    double v = outward_normal.y / 2.0 + 0.5;
+    hit.tex_coords = TexCoord(u, v);
     return true;
 }
 

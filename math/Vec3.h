@@ -117,6 +117,11 @@ inline Vec3 Lerp(const Vec3 &v0, const Vec3 &v1, double t)
     return (1-t) * v0 + t * v1;
 }
 
+inline Vec3 Mix(const Vec3 &v0, const Vec3 &v1, double t)
+{
+    return Lerp(v0, v1, t);
+}
+
 inline Vec3 RandVec3()
 {
     return Vec3(

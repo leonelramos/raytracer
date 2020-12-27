@@ -8,6 +8,18 @@ class Lambertian : public Material
 public:
     Lambertian() : albedo(RGB(.5, .5, .5)) {}
     Lambertian(const RGB &albedo) : albedo(albedo) {}
+    Lambertian(const RGB &albedo, 
+        std::shared_ptr<Texture> in_texture,
+        RGB in_primary_color,
+        RGB in_secondary_color
+    ) 
+        : albedo(albedo)
+        {
+            texture = in_texture;
+            primary_color = in_primary_color;
+            secondary_color = in_secondary_color;
+            using_texture = true;
+        }
     virtual bool Scatter(const Ray &ray, HitRecord &hit) override;
 private:
     RGB albedo;

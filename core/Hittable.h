@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include "Ray.h"
+#include "Vec2.h"
 
 class Material;
 
@@ -13,6 +14,7 @@ public:
     double t;
     Vec3 normal;
     bool front_face;
+    TexCoord tex_coords;
     std::shared_ptr<Material> material;
 
     inline void SetFaceNormal(const Ray &ray, const Vec3 &outward_normal)
@@ -29,6 +31,7 @@ public:
         normal = hr.normal;
         front_face = hr.front_face;
         material = hr.material;
+        tex_coords = hr.tex_coords;
         return *this;
     }
 };

@@ -13,9 +13,9 @@ RGB HitColor(const Ray &ray, Hittable &world, const double max_depth);
 int main(void)
 {
     const double aspect_ratio = 16.0 / 9.0;
-    const int image_width = 1920;
+    const int image_width = 650;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 250;
+    const int samples_per_pixel = 200;
     const int samples_per_strata = samples_per_pixel / 4;
     double max_depth = 50;
     
@@ -37,7 +37,9 @@ int main(void)
     const char *filename = "out.ppm";
     
     HittableList world;
-    auto material_ground = std::make_shared<Lambertian>(RGB(0.8, 0.1, 0.4));
+    auto texture_ground = std::make_shared<Texture>();
+    RGB ground_color(0.8, 0.1, 0.4);
+    auto material_ground = std::make_shared<Lambertian>(ground_color, texture_ground, ground_color, ground_color / 2.0);
     auto material_diffuse = std::make_shared<Lambertian>(RGB(52, 201, 235)/255.0);
     auto material_center = std::make_shared<Dielectric>(1.5);
     //auto material_left   = std::make_shared<Dielectric>(1.5);
@@ -90,6 +92,8 @@ int main(void)
                 }
                 double u = (j + (with_strata ? random_u_offset : RandomRange(-1, 1)))/(image_width - 1);
                 double v = (i + (with_strata ? random_v_offset : RandomRange(-1, 1)))/(image_height - 1);
+                u = Clamp(u, 0, 1);
+                v = Clamp(v, 0, 1);
                 const Ray ray = camera.GetRay(u, v);
                 pixel_color += HitColor(ray, world, max_depth);
             }
@@ -113,7 +117,12 @@ RGB HitColor(const Ray &ray, Hittable &world, const double max_depth)
         std::shared_ptr<Material> mat = hit.material;
         if(mat->Scatter(ray, hit))
         {
-            return mat->GetAttenuation() * HitColor(mat->GetScatteredRay(), world, max_depth - 1);
+            double texture_intensity = 1.0;
+            if(mat->UsingTexture()) 
+                texture_intensity = mat->GetTextureIntensity(hit.tex_coords.u, hit.tex_coords.v);
+            if(texture_intensity <= 0) std::cout << texture_intensity << std::endl;
+            
+            return mat->GetAttenuation() * texture_intensity * HitColor(mat->GetScatteredRay(), world, max_depth - 1);
         } 
         return RGB(0);
     }
