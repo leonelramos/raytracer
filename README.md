@@ -3,6 +3,8 @@
 To build just run default make
 <code>[root directory]$ make</code>
 
+[](out.png)
+
 ## Bibliography
 [_Ray Tracing in One Weekend_](https://raytracing.github.io/books/RayTracingInOneWeekend.html)<br>
 [_Ray Tracing: The Next Week_](https://raytracing.github.io/books/RayTracingTheNextWeek.html)<br>
